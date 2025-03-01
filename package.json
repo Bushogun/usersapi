@@ -1,0 +1,36 @@
+{
+  "name": "usersapp",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch index.js",
+    "test": "mocha --recursive"
+  },
+  "keywords": [],
+  "author": "Bushogun",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "1.8.1",
+    "bcrypt": "5.1.1",
+    "bcryptjs": "3.0.2",
+    "cors": "2.8.5",
+    "dotenv": "16.4.7",
+    "express": "4.21.2",
+    "jsonwebtoken": "9.0.2",
+    "pg": "8.13.3",
+    "postgres": "3.4.5",
+    "sequelize": "6.37.5",
+    "sequelize-cli": "6.6.2",
+    "swagger-jsdoc": "6.2.8",
+    "swagger-ui-express": "5.0.1"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "2.4.6",
+    "@types/jsonwebtoken": "9.0.9",
+    "chai": "^5.2.0",
+    "mocha": "^11.1.0",
+    "nodemon": "3.1.9",
+    "sinon": "^19.0.2"
+  }
+}

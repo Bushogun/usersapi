@@ -1,0 +1,5 @@
+node_modules
+.git
+.gitignore
+
+# docker image build -t usersapp:0.0.1 .
