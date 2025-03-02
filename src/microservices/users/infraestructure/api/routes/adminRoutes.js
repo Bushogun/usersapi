@@ -33,9 +33,9 @@ const router = Router();
 router.post('/register', register);
 
 
-// router.get('/profile', login);
-// router.put('/edit-profile', login);
-// router.put('/edit-password', login);
-// router.delete('/logout', login);
+router.get('/list-users', login);
+router.put('/view-user-details', login);
+router.put('/update-user', login);
+router.delete('/create-user', login);
 
 module.exports = router;

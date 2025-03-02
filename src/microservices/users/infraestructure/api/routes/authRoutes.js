@@ -17,9 +17,9 @@ const router = Router();
  *           schema:
  *             type: object
  *             properties:
- *               email:
+ *               email: admin@example.com
  *                 type: string
- *               password:
+ *               password: password123
  *                 type: string
  *     responses:
  *       200:
@@ -32,3 +32,35 @@ const router = Router();
  *         description: Error logging in user
  */
 router.post('/login', login);
+
+/**
+ * @openapi
+ * /api/login:
+ *   post:
+ *     tags:
+ *       - Users
+ *     summary: Logout a user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email: admin@example.com
+ *                 type: string
+ *               password: password123
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: User Logout in successfully
+ *       401:
+ *         description: Bad Request
+ *       404:
+ *         description: Bad Request
+ *       500:
+ *         description: Error logging in user
+ */
+router.post('logout', logout);
+
+module.exports = router;

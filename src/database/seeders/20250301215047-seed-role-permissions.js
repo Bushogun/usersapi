@@ -10,6 +10,7 @@ module.exports = {
       { roleId: 2, permissionId: 3 }, // CHANGE_PASSWORD
       { roleId: 2, permissionId: 4 }, // LOGIN
       { roleId: 2, permissionId: 5 }, // LOGOUT
+      { roleId: 2, permissionId: 10 }, // CREATE_USER_GUEST
 
       // Permisos para Admin
       { roleId: 1, permissionId: 4 }, // LOGIN

@@ -31,4 +31,9 @@ const router = Router();
  *       500:
  *         description: Error logging in user
  */
-router.post('/login', login);
+router.get('/view-profile', login);
+router.put('/update-profile', login);
+router.get('/change-password', login);
+router.get('/create-user-guest', login);
+
+module.exports  = router;

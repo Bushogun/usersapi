@@ -16,13 +16,20 @@
 5. Inicia Docker.
 
    ```sh
-       docker-compose up --build
-       docker exec -it node_usersapp /bin/bash
-       apt update && apt install -y postgresql-client
-       nslookup node_db
-       psql -h node_db -U user -d usersapp_db
-       npx sequelize-cli db:seed:all
-       npx sequelize db:seed:all --env development
+
+      docker-compose up -–build
+
+      docker exec -it node_usersapp /bin/bash
+      apt update && apt install -y postgresql-client
+      psql -h node_db -U user -d usersapp_db
+      password123
+      nslookup node_db
+      \q
+      exit
+
+      npx sequelize-cli db:migrate
+      npx sequelize db:seed:all --env development
+
    ```
 
 **¡RECUERDA SIEMPRE CERRAR SESIÓN PARA NO TENER ERRORES EN FUTURAS EJECUCIONES!**

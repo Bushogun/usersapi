@@ -12,7 +12,8 @@ module.exports = {
       { id: 6, name: 'LIST_USERS', createdAt: new Date(), updatedAt: new Date() },
       { id: 7, name: 'VIEW_USER_DETAILS', createdAt: new Date(), updatedAt: new Date() },
       { id: 8, name: 'UPDATE_USER', createdAt: new Date(), updatedAt: new Date() },
-      { id: 9, name: 'CREATE_USER', createdAt: new Date(), updatedAt: new Date() },
+      { id: 9, name: 'CREATE_USER_ROLE', createdAt: new Date(), updatedAt: new Date() },
+      { id: 10, name: 'CREATE_USER_GUEST', createdAt: new Date(), updatedAt: new Date() },
     ], {});
   },
 

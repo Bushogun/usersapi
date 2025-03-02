@@ -1,19 +1,18 @@
-// // SE ENCARGA DE CONECTAR TODAS LAS RUTAS
+const { Router } = require("express")
 
-// const { Router } = require("express") // importar express
+const router = Router();
 
-// const usuarioRoutes = require("./usuario.routes") // importar el archivo de rutas de usuarios
-// const medicoRoutes = require("./medico.routes")
-// const pacienteRoutes = require("./paciente.routes")
+const adminRoutes = require("./adminRoutes")
+const guestRoutes = require("./guestRoutes")
+const authRoutes = require("./authRoutes")
 
-// const rutas_init = () => { // aca se ponen todas las rutas que existen
-//   const router = Router() // crear una instancia de express.Router()
-
-//   router.use("/usuarios", usuarioRoutes) // para acceder a las rutas de usuarios de la api siempre deberá empezar con /usuarios
-//   router.use("/medicos", medicoRoutes)
-//   router.use("/pacientes", pacienteRoutes)
+const rutas_init = () => { 
+const router = Router()
+router.use("/admin", adminRoutes) 
+router.use("/guest", guestRoutes)
+router.use("/", authRoutes)
   
-//   return router // retornar el router
-// };
+return router 
+};
 
-// module.exports = { rutas_init } // exportar el archivo de rutas de la api
+module.exports = { rutas_init }
