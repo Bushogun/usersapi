@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('./index.js'); 
+const sequelize = require('../config/database');
+const Role = require('./roleModel.js');
 
 const User = sequelize.define('User', {
   id: {
@@ -24,13 +25,18 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  role: {
-    type: DataTypes.ENUM('admin', 'guest'),
-    defaultValue: 'guest',
+  roleId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: Role,
+      key: 'id',
+    },
   },
 }, {
   timestamps: true,
   tableName: 'Users',
 });
 
+User.belongsTo(Role, { foreignKey: 'roleId', as: 'role' });
 module.exports = User;

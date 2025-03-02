@@ -12,13 +12,17 @@ module.exports = {
     password: "password123",
     database: "usersapp_db",
     host: "127.0.0.1",
-    dialect: "postgres"
+    dialect: "postgres",
+    port: 5432
+
   },
   production: {
     username: "user",
     password: "password123",
     database: "usersapp_db",
     host: "127.0.0.1",
-    dialect: "postgres"
+    dialect: "postgres",
+    port: 5432
+
   }
 };
