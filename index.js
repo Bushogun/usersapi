@@ -1,6 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const userRoutes = require('./src/microservices/users/infraestructure/api/routes/userRoutes.js');
+const userRoutes = require('./src/microservices/users/infraestructure/api/routes/index.js');
 
 dotenv.config();
 const PORT = process.env.PORT || 3001;

@@ -61,6 +61,6 @@ router.post('/login', login);
  *       500:
  *         description: Error logging in user
  */
-router.post('logout', logout);
+router.post('logout', login);
 
 module.exports = router;
