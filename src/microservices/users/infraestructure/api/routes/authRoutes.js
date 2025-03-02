@@ -1,5 +1,5 @@
-const { Router } = require('express');
-const { login } = require('../controllers/userController.js');
+const { Router } = require("express");
+const { login, register, logout } = require("../controllers/authController.js");
 
 const router = Router();
 
@@ -8,7 +8,7 @@ const router = Router();
  * /api/users/login:
  *   post:
  *     tags:
- *       - Users
+ *       - Auth
  *     summary: Login a user
  *     requestBody:
  *       required: true
@@ -17,9 +17,9 @@ const router = Router();
  *           schema:
  *             type: object
  *             properties:
- *               email: admin@example.com
+ *               email:
  *                 type: string
- *               password: password123
+ *               password:
  *                 type: string
  *     responses:
  *       200:
@@ -31,15 +31,28 @@ const router = Router();
  *       500:
  *         description: Error logging in user
  */
-router.post('/login', login);
+router.post("/login", login);
 
 /**
  * @openapi
- * /api/login:
+ * /api/users/logout:
  *   post:
  *     tags:
- *       - Users
+ *       - Auth
  *     summary: Logout a user
+ *     responses:
+ *       200:
+ *         description: User logged out successfully
+ */
+router.post("/logout", logout);
+
+/**
+ * @openapi
+ * /api/users/register:
+ *   post:
+ *     tags:
+ *       - Auth
+ *     summary: Register a new user
  *     requestBody:
  *       required: true
  *       content:
@@ -47,20 +60,20 @@ router.post('/login', login);
  *           schema:
  *             type: object
  *             properties:
- *               email: admin@example.com
+ *               email:
  *                 type: string
- *               password: password123
+ *               password:
+ *                 type: string
+ *               firstName:
+ *                 type: string
+ *               lastName:
  *                 type: string
  *     responses:
- *       200:
- *         description: User Logout in successfully
- *       401:
- *         description: Bad Request
- *       404:
- *         description: Bad Request
+ *       201:
+ *         description: User created successfully
  *       500:
- *         description: Error logging in user
+ *         description: Error registering user
  */
-router.post('logout', login);
+router.post("/register", register);
 
 module.exports = router;

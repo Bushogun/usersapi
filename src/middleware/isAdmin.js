@@ -1,10 +1,11 @@
-// Middleware de autorización
-// Verifica rol de administrador
-const isAdmin = (req, res, next) => {
-    if (req.user.rol !== 'admin') {
-      return res.status(403).json({ error: 'Acceso denegado' });
-    }
-    next();
-  };
-  
-  module.exports = isAdmin;
+const { User } = require("../models");
+
+const isAdminMiddleware = async (req, res, next) => {
+  const user = await User.findByPk(req.userId);
+  if (!user || user.roleId !== 1) {
+    return res.status(403).json({ message: "Acceso denegado" });
+  }
+  next();
+};
+
+module.exports = isAdminMiddleware;

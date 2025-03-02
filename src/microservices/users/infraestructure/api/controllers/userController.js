@@ -4,33 +4,62 @@ const User = require('../../../../../database/models/userModel.js');
 
 const { sign } = jwt;
 
-const register = async (req, res) => {
+const viewProfile = async (req, res) => {
   try {
-    const { email, password, firstName, lastName } = req.body;
-    const hashedPassword = await hash(password, 10);
-    const user = await User.create({ email, password: hashedPassword, firstName, lastName });
-    res.status(201).json(user);
-  } catch (error) {
-    res.status(500).json({ message: 'Error al registrar el usuario', error: error.message });
-  }
-};
-
-const login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ where: { email } });
+    const userId = req.userId;
+    const user = await User.findByPk(userId, { attributes: { exclude: ['password'] } });
     if (!user) {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
-    const isValidPassword = await compare(password, user.password);
-    if (!isValidPassword) {
-      return res.status(401).json({ message: 'Contraseña incorrecta' });
-    }
-    const token = sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token });
+    res.status(200).json(user);
   } catch (error) {
-    res.status(500).json({ message: 'Error al iniciar sesión', error: error.message });
+    res.status(500).json({ message: 'Error al obtener el perfil del usuario', error: error.message });
   }
 };
+    const updateProfile = async (req, res) => {
+      try {
+        const userId = req.user.id; 
+        const { firstName, lastName, email } = req.body;
+    
+        const user = await User.findByPk(userId);
+        if (!user) {
+          return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+    
+        user.firstName = firstName || user.firstName;
+        user.lastName = lastName || user.lastName;
+        user.email = email || user.email;
+    
+        await user.save();
+    
+        res.status(200).json({ message: 'Perfil actualizado correctamente', user });
+      } catch (error) {
+        res.status(500).json({ message: 'Error al actualizar el perfil', error: error.message });
+      }
+    };
 
-module.exports = { register, login };
+    const changePassword = async (req, res) => {
+      try {
+        const userId = req.user.id; 
+        const { currentPassword, newPassword } = req.body;
+    
+        const user = await User.findByPk(userId);
+        if (!user) {
+          return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+    
+        const isValidPassword = await compare(currentPassword, user.password);
+        if (!isValidPassword) {
+          return res.status(401).json({ message: 'Contraseña actual incorrecta' });
+        }
+    
+        const hashedPassword = await hash(newPassword, 10);
+        user.password = hashedPassword;
+        await user.save();
+    
+        res.status(200).json({ message: 'Contraseña cambiada correctamente' });
+      } catch (error) {
+        res.status(500).json({ message: 'Error al cambiar la contraseña', error: error.message });
+      }
+    };
+    module.exports = { viewProfile, updateProfile, changePassword };  

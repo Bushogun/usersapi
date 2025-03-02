@@ -7,9 +7,9 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: { title: "User API", version: "1.0.0" },
-    servers: [{ url: "http://localhost:3000" }],
+    servers: [{ url: "http://localhost:3001" }],
   },
-  apis: ["./src/microservices/users/infrastructure/api/routes/*.js"],
+  apis: ["./src/microservices/users/infraestructure/api/routes/*.js"],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
