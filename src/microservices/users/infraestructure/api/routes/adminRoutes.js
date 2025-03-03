@@ -1,6 +1,6 @@
 const { Router } = require("express");
-const { getAllUsers, getUserDetails, updateUser, createUser } = require("../controllers/AdminController.js");
 const isAdminMiddleware = require('../../../../../middleware/isAdmin');
+const { getAllUsers, getUserDetails, updateUser } = require("../controllers/AdminController.js");
 
 const router = Router();
 

@@ -1,4 +1,5 @@
 const UserRepository = require("../infraestructure/repositories/UserRepository");
+const RolePermissionRepository = require("../infraestructure/repositories/RolePermissionRepository"); 
 const { hash } = require("bcryptjs");
 
 class AdminService {

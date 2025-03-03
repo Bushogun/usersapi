@@ -1,16 +1,16 @@
 const { Router } = require('express');
-const { updateProfile, changePassword } = require('../controllers/AuthController.js');
-const { getUserDetails } = require('../controllers/AdminController.js');
+const isAuthMiddleware = require('../../../../../middleware/isAuthMiddleware.js');
+const { getDetails, updateSelf, changePassword } = require('../controllers/UserController.js');
 
 const router = Router();
 
 /**
  * @openapi
- * /api/users/view-profile:
+ * /api/user/view-profile:
  *   get:
  *     tags:
- *       - Users
- *     summary: View user profile
+ *       - User
+ *     summary: View self profile
  *     responses:
  *       200:
  *         description: User profile retrieved successfully
@@ -21,14 +21,14 @@ const router = Router();
  *       500:
  *         description: Error retrieving user profile
  */
-router.get('/view-profile', getUserDetails);
+router.get('/view-profile', getDetails, isAuthMiddleware);
 
 /**
  * @openapi
- * /api/users/update-profile:
+ * /api/user/update-profile:
  *   put:
  *     tags:
- *       - Users
+ *       - User
  *     summary: Update user profile
  *     requestBody:
  *       required: true
@@ -37,9 +37,9 @@ router.get('/view-profile', getUserDetails);
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               firstName:
  *                 type: string
- *               email:
+ *               lastName:
  *                 type: string
  *     responses:
  *       200:
@@ -53,15 +53,24 @@ router.get('/view-profile', getUserDetails);
  *       500:
  *         description: Error updating user profile
  */
-router.put('/update-profile', updateProfile);
+router.put('/update-profile', updateSelf, isAuthMiddleware);
 
 /**
  * @openapi
- * /api/users/change-password:
+ * /api/user/change-password:
  *   get:
  *     tags:
- *       - Users
+ *       - User
  *     summary: Change user password
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               password:
+ *                 type: string
  *     responses:
  *       200:
  *         description: Password changed successfully
@@ -74,6 +83,6 @@ router.put('/update-profile', updateProfile);
  *       500:
  *         description: Error changing password
  */
-router.put('/change-password', changePassword);
+router.put('/change-password', changePassword, isAuthMiddleware);
 
 module.exports = router;
