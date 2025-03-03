@@ -34,18 +34,6 @@ const router = Router();
  */
 router.post("/login", login);
 
-/**
- * @openapi
- * /api/logout:
- *   post:
- *     tags:
- *       - Auth
- *     summary: Logout a user
- *     responses:
- *       200:
- *         description: User logged out successfully
- */
-router.post("/logout", login);
 
 /**
  * @openapi
