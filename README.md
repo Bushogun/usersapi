@@ -32,6 +32,13 @@
 
 **Para probar los endpoints se necesita usar Postman ya que suele ser necesario enviar el token JWT retornado en el login en los headers**
 
+El proyecto tiene por defecto usuarios 
+admin@example.com
+guest@example.com
+
+Con la contraseña 
+password123
+
 <p align="right">
   <img src="https://media.giphy.com/media/SvFocn0wNMx0iv2rYz/giphy.gif" alt="GIF Animado">
 </p>
