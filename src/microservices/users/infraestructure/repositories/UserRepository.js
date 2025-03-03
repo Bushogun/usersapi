@@ -1,4 +1,4 @@
-const { User } = require("../../../../database/models");
+const User  = require("../../../../database/models/userModel");
 
 class UserRepository {
   async create(userData) {
@@ -6,7 +6,11 @@ class UserRepository {
   }
 
   async findByEmail(email) {
-    return await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      throw new Error("Recuerda llenar la base de datos con el comando: npx sequelize db:seed:all --env development");
+    }
+    return user;
   }
 
   async findById(id) {
@@ -18,7 +22,12 @@ class UserRepository {
   }
 
   async update(id, userData) {
-    return await User.update(userData, { where: { id } });
+    const user = await User.findByPk(id);
+    if (!user) {
+      throw new Error("Usuario no encontrado");
+    }
+    await user.update(userData);
+    return user;
   }
 
   async delete(id) {

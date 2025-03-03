@@ -1,54 +1,55 @@
-const User = require('../../../../../database/models/userModel.js');
-const Role = require('../../../../../database/models/roleModel.js');
+const AdminService = require("../../../../users/application/AdminService");
 
-
-const listUsers = async (req, res) => {
-  try {
-    const users = await User.findAll({ include: Role });
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({ message: "Error al listar usuarios", error });
-  }
-};
-
-const getUserDetails = async (req, res) => {
-  try {
-    const user = await User.findByPk(req.params.id, { include: Role });
-    if (!user) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
+class AdminController {
+  async getAllUsers(req, res, isAdminMiddleware) {
+    try {
+      const users = await AdminService.getAllUsers(isAdminMiddleware);
+      res.status(200).json(users);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
-    res.json(user);
-  } catch (error) {
-    res.status(500).json({ message: "Error al obtener detalles del usuario", error });
   }
-};
 
-const updateUser = async (req, res) => {
-  try {
-    const { name, email, roleId } = req.body;
-    const user = await User.findByPk(req.params.id);
-    if (!user) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
+  async getUserDetails(req, res, isAdminMiddleware) {
+    try {
+      const { userId } = req.params;
+      const user = await AdminService.getUserDetails(userId, isAdminMiddleware);
+      res.status(200).json(user);
+    } catch (error) {
+      res.status(404).json({ message: error.message });
     }
-    user.name = name || user.name;
-    user.email = email || user.email;
-    user.roleId = roleId || user.roleId;
-    await user.save();
-    res.json({ message: "Usuario actualizado", user });
-  } catch (error) {
-    res.status(500).json({ message: "Error al actualizar usuario", error });
   }
-};
 
-const createUser = async (req, res) => {
-  try {
-    const { name, email, password, roleId } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await User.create({ name, email, password: hashedPassword, roleId });
-    res.status(201).json({ message: "Usuario creado", user });
-  } catch (error) {
-    res.status(500).json({ message: "Error al crear usuario", error });
+  async updateUser(req, res, isAdminMiddleware) {
+    try {
+      const { userId } = req.params;
+      const userData = req.body;
+      const updatedUser = await AdminService.updateUser(userId, userData, isAdminMiddleware);
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
   }
-};
 
-module.exports = { listUsers, getUserDetails, updateUser, createUser };
+  async deleteUser(req, res) {
+    try {
+      const { userId } = req.params;
+      await AdminService.deleteUser(userId);
+      res.status(200).json({ message: "Usuario eliminado correctamente" });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  }
+
+  async assignPermissionToRole(req, res) {
+    try {
+      const { roleId, permissionId } = req.body;
+      const result = await AdminService.assignPermissionToRole(roleId, permissionId);
+      res.status(201).json(result);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  }
+}
+
+module.exports = new AdminController();

@@ -1,11 +1,12 @@
 const { Router } = require("express");
-const { login, register, logout } = require("../controllers/authController.js");
+const { login, register } = require("../controllers/AuthController");
+const isAdminMiddleware = require('../../../../../middleware/isAdmin');
 
 const router = Router();
 
 /**
  * @openapi
- * /api/users/login:
+ * /api/login:
  *   post:
  *     tags:
  *       - Auth
@@ -35,7 +36,7 @@ router.post("/login", login);
 
 /**
  * @openapi
- * /api/users/logout:
+ * /api/logout:
  *   post:
  *     tags:
  *       - Auth
@@ -44,11 +45,11 @@ router.post("/login", login);
  *       200:
  *         description: User logged out successfully
  */
-router.post("/logout", logout);
+router.post("/logout", login);
 
 /**
  * @openapi
- * /api/users/register:
+ * /api/register:
  *   post:
  *     tags:
  *       - Auth
@@ -74,6 +75,6 @@ router.post("/logout", logout);
  *       500:
  *         description: Error registering user
  */
-router.post("/register", register);
+router.post("/register", register, isAdminMiddleware);
 
 module.exports = router;

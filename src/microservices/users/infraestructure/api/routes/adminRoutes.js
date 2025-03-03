@@ -1,11 +1,12 @@
 const { Router } = require("express");
-const { listUsers, getUserDetails, updateUser, createUser } = require("../controllers/adminController.js");
+const { getAllUsers, getUserDetails, updateUser, createUser } = require("../controllers/AdminController.js");
+const isAdminMiddleware = require('../../../../../middleware/isAdmin');
 
 const router = Router();
 
 /**
  * @openapi
- * /api/users:
+ * /api/admin/list-users:
  *   get:
  *     tags:
  *       - Admin
@@ -16,11 +17,11 @@ const router = Router();
  *       500:
  *         description: Error retrieving users
  */
-router.get("/list-users", listUsers);
+router.get("/list-users", getAllUsers, isAdminMiddleware);
 
 /**
  * @openapi
- * /api/users/{id}:
+ * /api/admin/view-user-details/{id}:
  *   get:
  *     tags:
  *       - Admin
@@ -39,11 +40,11 @@ router.get("/list-users", listUsers);
  *       500:
  *         description: Error retrieving user details
  */
-router.get("/view-user-details/:id", getUserDetails);
+router.get("/view-user-details/:id", getUserDetails, isAdminMiddleware);
 
 /**
  * @openapi
- * /api/users/{id}:
+ * /api/admin/update-user/{id}:
  *   put:
  *     tags:
  *       - Admin
@@ -61,12 +62,16 @@ router.get("/view-user-details/:id", getUserDetails);
  *           schema:
  *             type: object
  *             properties:
- *               name:
- *                 type: string
  *               email:
  *                 type: string
- *               roleId:
+ *               password:
  *                 type: string
+ *               firstName:
+ *                 type: string 
+ *               lastName:
+ *                 type: string
+ *               roleId:
+ *                 type: number
  *     responses:
  *       200:
  *         description: User updated successfully
@@ -75,36 +80,6 @@ router.get("/view-user-details/:id", getUserDetails);
  *       500:
  *         description: Error updating user
  */
-router.put("/update-user/:id", updateUser);
-
-/**
- * @openapi
- * /api/users:
- *   post:
- *     tags:
- *       - Admin
- *     summary: Create a new user
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               email:
- *                 type: string
- *               password:
- *                 type: string
- *               roleId:
- *                 type: string
- *     responses:
- *       201:
- *         description: User created successfully
- *       500:
- *         description: Error creating user
- */
-router.post("/create-user", createUser);
+router.put("/update-user/:userId", updateUser, isAdminMiddleware);
 
 module.exports = router;

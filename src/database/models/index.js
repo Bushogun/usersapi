@@ -1,10 +1,10 @@
-const sequelize = require('./database');
+const sequelize = require('../config/database');
 const User = require('./userModel'); 
-const Role = require('.roleModel');
+const Role = require('./roleModel');
 const Permission = require('./permissionModel');
 const RolePermission = require('./rolePermissionModel');
 
-User.belongsTo(Role, { foreignKey: 'roleId', as: 'role' });
+User.belongsTo(Role, { foreignKey: 'roleId', as: 'userRole' });
 Role.belongsToMany(Permission, { through: RolePermission, foreignKey: 'roleId', as: 'permissions' });
 Permission.belongsToMany(Role, { through: RolePermission, foreignKey: 'permissionId', as: 'roles' });
 

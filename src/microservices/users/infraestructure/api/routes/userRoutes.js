@@ -1,36 +1,8 @@
 const { Router } = require('express');
-const { viewProfile, updateProfile, changePassword } = require('../controllers/userController.js');
+const { updateProfile, changePassword } = require('../controllers/AuthController.js');
+const { getUserDetails } = require('../controllers/AdminController.js');
 
 const router = Router();
-
-/**
- * @openapi
- * /api/users/login:
- *   post:
- *     tags:
- *       - Users
- *     summary: Login a user
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               email:
- *                 type: string
- *               password:
- *                 type: string
- *     responses:
- *       200:
- *         description: User logged in successfully
- *       401:
- *         description: Invalid credentials
- *       404:
- *         description: User not found
- *       500:
- *         description: Error logging in user
- */
 
 /**
  * @openapi
@@ -49,7 +21,7 @@ const router = Router();
  *       500:
  *         description: Error retrieving user profile
  */
-router.get('/view-profile', viewProfile);
+router.get('/view-profile', getUserDetails);
 
 /**
  * @openapi
@@ -102,6 +74,6 @@ router.put('/update-profile', updateProfile);
  *       500:
  *         description: Error changing password
  */
-router.get('/change-password', changePassword);
+router.put('/change-password', changePassword);
 
 module.exports = router;

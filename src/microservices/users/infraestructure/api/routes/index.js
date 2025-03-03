@@ -1,47 +1,19 @@
 const { Router } = require("express");
+const authMiddleware = require("../../../../../middleware/authMiddleware");
+const adminMiddleware = require("../../../../../middleware/adminMiddleware");
 const router = Router();
 
 const adminRoutes = require("./adminRoutes");
 const userRoutes = require("./userRoutes");
 const authRoutes = require("./authRoutes");
 
-/**
- * @openapi
- * /api/admin:
- *   get:
- *     tags:
- *       - Admin
- *     summary: Admin routes
- *     responses:
- *       200:
- *         description: Admin routes
- */
-router.use("/admin", adminRoutes);
+// Rutas de administrador (requiere autenticación y rol de admin)
+router.use("/admin", authMiddleware, adminRoutes);
 
-/**
- * @openapi
- * /api/user:
- *   get:
- *     tags:
- *       - Users
- *     summary: User routes
- *     responses:
- *       200:
- *         description: User routes
- */
-router.use("/user", userRoutes);
+// Rutas de usuario (requiere autenticación, pero no es necesario ser admin)
+router.use("/user", authMiddleware, userRoutes);
 
-/**
- * @openapi
- * /api:
- *   get:
- *     tags:
- *       - Auth
- *     summary: Auth routes
- *     responses:
- *       200:
- *         description: Auth routes
- */
+// Rutas de autenticación públicas (login, registro, etc.)
 router.use("/", authRoutes);
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User } = require("../database/models/userModel");
 
 const isAdminMiddleware = async (req, res, next) => {
   const user = await User.findByPk(req.userId);
