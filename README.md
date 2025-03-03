@@ -39,6 +39,10 @@ guest@example.com
 Con la contraseña 
 password123
 
+Se usan los valores 1 como Admin y 2 como Guest
+
+La dirección de la documentación es http://localhost:3001/api-docs/#/
+
 <p align="right">
   <img src="https://media.giphy.com/media/SvFocn0wNMx0iv2rYz/giphy.gif" alt="GIF Animado">
 </p>
